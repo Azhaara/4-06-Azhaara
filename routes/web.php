@@ -18,18 +18,23 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    return view('home');
+    return view('home', [
+    "title" => "Home" ]);
 });
 
 Route::get('/about', function () {
     return view('about', [
+        "title" => "About",
     "nama" => "Azhaara",
-    "email" => "iniemail@gmail.com",
+    "email" => "azhaaraara@gmail.com
+    ",
     "gambar" => "ciss.jpg"
 ]);
 
 }); 
 
 Route::get('/gallery', function () {
-    return view('gallery');
+    return view('gallery', [
+        "title" => "Gallery"
+    ]);
 });
