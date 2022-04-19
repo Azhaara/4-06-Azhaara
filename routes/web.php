@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\ContactController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +21,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('home', [
-    "title" => "Home" ]);
+Route::get('/', function () {
+    return view('index', [
+    "title" => "Beranda" ]);
 });
 
 Route::get('/about', function () {
@@ -30,16 +34,35 @@ Route::get('/about', function () {
     ",
     "gambar" => "ciss.jpg"
 ]);
+});
+Route::get('/delete_contact/{id}', ContactController::class . '@destroy');
 
-}); 
+Route::get('/edit/{id}', ContactController::class . '@edit');
 
 Route::get('/gallery', function () {
     return view('gallery', [
         "title" => "Gallery"
     ]);
-
-
 }); 
+
+Route:
+
+
+//Route::get('/contacts', function () {
+    //return view('contacts', [
+      //  "title" => "Contacts"
+    //]);
+
+
+//}); 
 
 Route::resource('/contacts', ContactController::class);
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/home',[App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+});

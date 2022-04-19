@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Contact;
 
 class ContactController extends Controller
 {
@@ -13,7 +14,9 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        return view('contacts',[
+            "title" => "Contacts"
+         ]);
     }
 
     /**
@@ -34,7 +37,11 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $contact = Contact::create($request->all());
+        $contact->save();
+
+        return redirect('contacts');
     }
 
     /**
@@ -58,7 +65,11 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pesan = Contact::where($id)->get();
+        
+        return view('admin.edit',[
+            'pesan' => $pesan,
+        ]);
     }
 
     /**
@@ -81,6 +92,9 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pesan = Contact::where('id',$id)->first();
+        Contact::where('id',$id)->delete();
+
+        return redirect()->back();
     }
 }
